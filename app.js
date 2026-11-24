@@ -1,4 +1,6 @@
 'use strict';
+const SUPABASE_URL = 'https://yiyrgzymbxrqygdmrwdn.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpeXJnenltYnhycXlnZG1yd2RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1NTkyMjYsImV4cCI6MjExMTEzNTIyNn0.oYfViKI2yhEB_TMsTR98xOOThOZnb1dL1olVF1MBskA';
 // Chave "anon" é pública por design: a segurança real está nas políticas RLS (schema.sql).
 // NUNCA coloque aqui a chave service_role.
 const SUPABASE_URL = 'COLE_AQUI_A_URL_DO_SEU_PROJETO';
