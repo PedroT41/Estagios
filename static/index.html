@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estagiagros – vagas de estágio em ciências agrárias</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F2F8EE;        /* fundo claro */
+  --surface:#FFFFFF;
+  --detail:#DCEBC8;    /* detalhes claros */
+  --detail-2:#EAF3DD;
+  --green:#2F6B3A;     /* verde principal, mais escuro */
+  --green-d:#245530;
+  --ink:#1F3324;
+  --muted:#5B7160;
+  --line:#D5E3C6;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.brand{font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;margin:0;line-height:1.2}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+
+/* topo */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--green);color:#fff}
+.bar{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:8px;font-size:1.35rem;font-weight:700;color:#fff;text-decoration:none}
+.brand svg{width:28px;height:28px}
+.search{flex:1;max-width:380px;position:relative}
+.search input{width:100%;border:0;border-radius:8px;padding:9px 12px;background:var(--detail-2);color:var(--ink)}
+.search input::placeholder{color:var(--muted)}
+nav{margin-left:auto;display:flex;gap:4px}
+nav a{color:#E6F2D8;text-decoration:none;padding:6px 12px;border-radius:8px;font-weight:600;font-size:.95rem}
+nav a[aria-current]{background:rgba(255,255,255,.16);color:#fff}
+nav a:hover{background:rgba(255,255,255,.12)}
+
+/* layout */
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px;display:grid;grid-template-columns:230px minmax(0,1fr) 270px;gap:20px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.pad{padding:16px}
+
+/* perfil */
+.profile{overflow:hidden}
+.cover{height:64px;background:var(--detail);background-image:repeating-linear-gradient(100deg,transparent 0 14px,rgba(47,107,58,.12) 14px 16px)}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font:700 1.4rem "Bricolage Grotesque",sans-serif;border:3px solid #fff;margin:-32px 0 8px 16px}
+.profile .pad{padding-top:0}
+.profile h2{font-size:1.1rem}
+.profile p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.stats{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;font-size:.9rem;display:flex;justify-content:space-between;color:var(--muted)}
+.stats b{color:var(--green)}
+
+/* publicar */
+.post-box{padding:14px 16px;display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.post-box .avatar{margin:0;width:44px;height:44px;font-size:1rem;border:0;flex:none}
+.post-box button{flex:1;text-align:left;border:1px solid var(--line);background:var(--detail-2);border-radius:999px;padding:10px 16px;color:var(--muted);cursor:pointer}
+.post-box button:hover{background:var(--detail)}
+
+/* filtros */
+.filters{padding:12px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--detail-2);color:var(--green-d);padding:5px 12px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.filters select{margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 8px}
+.count{margin:0 2px 10px;color:var(--muted);font-size:.9rem}
+
+/* vagas */
+.job{padding:16px;margin-bottom:12px;display:grid;grid-template-columns:52px 1fr;gap:14px}
+.logo{width:52px;height:52px;border-radius:10px;background:var(--detail);color:var(--green-d);display:grid;place-items:center;font:700 1.1rem "Bricolage Grotesque",sans-serif}
+.job h3{font-size:1.1rem;color:var(--green-d)}
+.org{color:var(--ink);font-weight:600;font-size:.95rem}
+.meta{color:var(--muted);font-size:.9rem;margin:2px 0 8px}
+.job p{margin:0 0 10px;font-size:.95rem;max-width:68ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{background:var(--detail-2);border:1px solid var(--line);color:var(--green-d);padding:2px 10px;border-radius:6px;font-size:.82rem}
+.actions{display:flex;gap:8px;align-items:center}
+.btn{border-radius:999px;padding:7px 18px;font-weight:600;cursor:pointer;border:1.5px solid var(--green)}
+.btn.primary{background:var(--green);color:#fff}
+.btn.primary:hover{background:var(--green-d)}
+.btn.ghost{background:transparent;color:var(--green)}
+.btn.ghost:hover{background:var(--detail-2)}
+.btn.ghost[aria-pressed="true"]{background:var(--detail);}
+.when{margin-left:auto;color:var(--muted);font-size:.85rem}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+
+/* lateral direita */
+aside h2{font-size:1rem;margin-bottom:10px;color:var(--green-d)}
+.side li{list-style:none;padding:8px 0;border-top:1px solid var(--line);font-size:.92rem}
+.side li:first-child{border-top:0}
+.side ul{margin:0;padding:0}
+.side small{display:block;color:var(--muted)}
+.side + .side{margin-top:14px}
+
+/* formulário (diálogo) */
+dialog{border:1px solid var(--line);border-radius:14px;padding:0;width:min(460px,92vw);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(31,51,36,.4)}
+dialog form{padding:20px;display:grid;gap:12px}
+dialog label{display:grid;gap:4px;font-weight:600;font-size:.9rem}
+dialog input,dialog select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--detail-2);font-weight:400}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+
+[hidden]{display:none!important}
+.linkt{all:unset;cursor:pointer;color:var(--green-d)}
+.linkt:hover{text-decoration:underline}
+.linkt:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.login{background:var(--detail);color:var(--green-d);border-color:var(--detail);padding:6px 16px}
+.login:hover{background:#fff}
+.tabs{display:flex;gap:8px}
+.hint{color:var(--muted);font-size:.9rem;margin:0}
+#det{width:min(620px,92vw);max-height:90vh}
+.dbody{padding:22px;display:grid;gap:12px}
+.dbody h3{font-size:1.3rem;color:var(--green-d)}
+.dbody h4{margin:0 0 4px;font-size:1rem;color:var(--green-d);font-family:"Bricolage Grotesque",sans-serif}
+.dbody ul{margin:0;padding-left:20px}
+.dhead{display:flex;gap:14px;align-items:center}
+.filters label{font-size:.9rem;color:var(--muted)}
+.filters select[id]{margin-left:0}
+.filters select[id]+label{margin-left:12px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--green-d);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+
+@media (max-width:980px){.wrap{grid-template-columns:200px minmax(0,1fr)}aside.right{display:none}}
+@media (max-width:700px){
+  .wrap{grid-template-columns:1fr}
+  .profile{display:none}
+  nav{display:none}
+  .search{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.err{color:#9b2c2c;font-size:.9rem;margin:0;min-height:1.1em}
+.item{padding:10px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .item{margin-left:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+dialog textarea{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--detail-2);font-weight:400;resize:vertical}
+#dlg,#ldlg{max-height:92vh;overflow:auto}
+#pdlg{width:min(720px,94vw);max-height:90vh;overflow:auto}
+#pdlg select{border:1px solid var(--line);border-radius:8px;padding:4px 8px;background:var(--detail-2);margin-top:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="#inicio" aria-label="Estagiagros, página inicial">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#DCEBC8"/><path d="M8 24c0-9 5-14 16-15-1 10-6 15-14 15" fill="#2F6B3A"/><path d="M8 24c3-5 6-8 10-10" stroke="#DCEBC8" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Estagiagros
+    </a>
+    <div class="search"><input id="busca" type="search" placeholder="Buscar cargo, empresa ou cidade" aria-label="Buscar vagas"></div>
+    <nav aria-label="Principal">
+      <a href="#inicio" aria-current="page">Vagas</a>
+      <a href="#empresas">Empresas</a>
+      <a href="#salvas" id="navSalvas">Salvas</a>
+      <a href="#painel" id="navPainel" hidden>Candidaturas</a>
+    </nav>
+    <button class="btn login" id="btnLogin" type="button">Entrar</button>
+  </div>
+</header>
+
+<main class="wrap" id="inicio">
+  <aside class="card profile" aria-label="Seu perfil">
+    <div class="cover"></div>
+    <div class="avatar">AL</div>
+    <div class="pad">
+      <h2 id="pNome">Visitante</h2>
+      <p id="pCurso">Entre para se candidatar e salvar vagas</p>
+      <p id="pInst">Estudantes e empresas</p>
+      <div class="stats"><span>Candidaturas <b id="nCand">0</b></span><span>Salvas <b id="nSalvas">0</b></span></div>
+    </div>
+  </aside>
+
+  <section aria-label="Vagas de estágio">
+    <div class="card post-box">
+      <div class="avatar">AL</div>
+      <button id="abrirForm" type="button">Sua empresa tem uma vaga? Divulgue aqui</button>
+    </div>
+
+    <div class="card filters" id="filtros" role="group" aria-label="Filtrar por área"></div>
+    <div class="filters card" style="margin-top:-6px;padding:10px 16px">
+      <label for="modal" style="font-size:.9rem;color:var(--muted)">Modalidade</label>
+      <select id="modal" style="margin-left:0">
+        <option value="">Todas</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option>
+      </select>
+      <label for="uf" style="font-size:.9rem;color:var(--muted);margin-left:12px">Estado</label>
+      <select id="uf" style="margin-left:0"><option value="">Todos</option></select>
+      <label for="bolsa">Bolsa mínima</label>
+      <select id="bolsa"><option value="0">Qualquer</option><option value="1500">R$ 1.500</option><option value="1800">R$ 1.800</option><option value="2000">R$ 2.000</option></select>
+      <label for="carga">Carga horária</label>
+      <select id="carga"><option value="">Qualquer</option><option value="20">Até 20 h</option><option value="25">Até 25 h</option><option value="30">Até 30 h</option></select>
+      <label for="ordem">Ordenar por</label>
+      <select id="ordem"><option value="recentes">Mais recentes</option><option value="bolsa">Maior bolsa</option></select>
+    </div>
+
+    <p class="count" id="contagem" aria-live="polite"></p>
+    <div id="lista"></div>
+  </section>
+
+  <aside class="right" aria-label="Destaques" id="empresas">
+    <div class="card pad side"><h2>Empresas contratando</h2><ul id="empresasLista"></ul></div>
+    <div class="card pad side"><h2>Dicas para candidatos</h2><ul>
+      <li>Informe o curso e a instituição no cadastro.</li>
+      <li>Destaque projetos de campo, iniciação científica e monitorias.</li>
+      <li>Confira se a empresa oferece termo de compromisso e seguro.</li>
+    </ul></div>
+  </aside>
+</main>
+
+<dialog id="dlg">
+  <form id="form">
+    <h2 style="color:var(--green-d)">Divulgar vaga de estágio</h2>
+    <label>Cargo<input name="titulo" required minlength="5" maxlength="120"></label>
+    <div class="two">
+      <label>Cidade<input name="cidade" required maxlength="80"></label>
+      <label>UF<input name="uf" required minlength="2" maxlength="2" style="text-transform:uppercase"></label>
+    </div>
+    <label>Área<select name="area" id="fArea"></select></label>
+    <div class="two">
+      <label>Modalidade<select name="modalidade"><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select></label>
+      <label>Bolsa (R$, 0 = a combinar)<input name="bolsa" type="number" min="0" max="50000" value="0"></label>
+    </div>
+    <label>Carga horária semanal (h)<input name="carga_horaria" type="number" min="0" max="44" value="30"></label>
+    <label>Atividades<textarea name="descricao" required minlength="10" maxlength="2000" rows="3"></textarea></label>
+    <label>Requisitos (um por linha)<textarea name="requisitos" maxlength="2000" rows="3"></textarea></label>
+    <label>Benefícios (um por linha)<textarea name="beneficios" maxlength="2000" rows="2"></textarea></label>
+    <p class="err" id="fErr" role="alert"></p>
+    <div class="row">
+      <button type="button" class="btn ghost" id="cancelar">Cancelar</button>
+      <button type="submit" class="btn primary">Publicar vaga</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="det"><div class="dbody" id="detBody"></div></dialog>
+
+<dialog id="ldlg">
+  <form id="lform">
+    <h2 id="lTitulo" style="color:var(--green-d)">Entrar no Estagiagros</h2>
+    <p class="hint" id="lMsg"></p>
+    <div class="tabs" id="lTabs" role="group" aria-label="Tipo de conta">
+      <button type="button" class="chip" data-t="estudante" aria-pressed="true">Sou estudante</button>
+      <button type="button" class="chip" data-t="empresa" aria-pressed="false">Sou empresa</button>
+    </div>
+    <label id="lNomeW"><span id="lNome">Nome completo</span><input name="nome" maxlength="120" autocomplete="name"></label>
+    <label id="lCurso">Curso<select name="curso"></select></label>
+    <label id="lInst">Instituição de ensino (opcional)<input name="instituicao" maxlength="120"></label>
+    <label id="lCnpj">CNPJ (opcional)<input name="cnpj" inputmode="numeric" maxlength="18"></label>
+    <label>E-mail<input name="email" type="email" required autocomplete="email"></label>
+    <label>Senha<input name="senha" type="password" required minlength="8" maxlength="128" autocomplete="current-password"></label>
+    <p class="err" id="lErr" role="alert"></p>
+    <div class="row">
+      <button type="button" class="btn ghost" id="lAlt">Criar conta</button>
+      <button type="button" class="btn ghost" id="lCancel">Cancelar</button>
+      <button type="submit" class="btn primary" id="lOk">Entrar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="pdlg">
+  <div class="dbody">
+    <div class="dhead" style="justify-content:space-between"><h3 id="pTitulo"></h3><button type="button" class="btn ghost" id="pFechar">Fechar</button></div>
+    <div id="pCorpo"></div>
+  </div>
+</dialog>
+
+<div id="toast" role="status"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sigla = s => String(s).split(" ").filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join("").toUpperCase() || String(s)[0].toUpperCase();
+const quando = d => d < 1 ? "Publicada hoje" : "Há " + d + (d === 1 ? " dia" : " dias");
+const reais = n => n ? "R$ " + n.toLocaleString("pt-BR") : "a combinar";
+const horas = n => n ? n + " h/semana" : "a combinar";
+const lista = t => t ? "<ul>" + t.split("\n").filter(Boolean).map(x => `<li>${esc(x)}</li>`).join("") + "</ul>" : '<p class="hint">Não informado.</p>';
+
+let token = null, user = null, area = "Todas", soSalvas = false, vagas = [], detAtual = null, modo = "entrar", tipoConta = "estudante";
+try { token = localStorage.getItem("eg_token"); } catch (e) {}
+function guardar(t) { token = t; try { t ? localStorage.setItem("eg_token", t) : localStorage.removeItem("eg_token"); } catch (e) {} }
+function toast(t) { const e = $("#toast"); e.textContent = t; e.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove("on"), 2400); }
+const acao = fn => fn().catch(e => toast(e.message));
+
+async function api(metodo, url, corpo) {
+  const r = await fetch("/api" + url, {
+    method: metodo,
+    headers: {"Content-Type": "application/json", ...(token ? {Authorization: "Bearer " + token} : {})},
+    body: corpo ? JSON.stringify(corpo) : undefined
+  });
+  const d = await r.json().catch(() => ({}));
+  if (r.status === 401 && token && !url.startsWith("/login")) { guardar(null); user = null; mostrarUsuario(); }
+  if (!r.ok) throw new Error(d.erro || "Erro " + r.status);
+  return d;
+}
+
+/* ---------- usuário ---------- */
+function mostrarUsuario() {
+  const emp = user && user.tipo === "empresa", n = user ? user.nome : "Visitante";
+  document.querySelectorAll(".avatar").forEach(a => a.textContent = user ? sigla(n) : "V");
+  $("#pNome").textContent = n;
+  $("#pCurso").textContent = !user ? "Entre para se candidatar e salvar vagas" : emp ? "Conta de empresa" : (user.curso || "Estudante");
+  $("#pInst").textContent = !user ? "Estudantes e empresas" : emp ? "Pode divulgar vagas" : (user.instituicao || "Conta de estudante");
+  $("#nCand").textContent = user ? user.candidaturas : 0;
+  $("#nSalvas").textContent = user ? user.salvas : 0;
+  $("#btnLogin").textContent = user ? "Sair" : "Entrar";
+  $("#navPainel").hidden = !user;
+  $("#navPainel").textContent = emp ? "Minhas vagas" : "Candidaturas";
+}
+async function atualizarEu() {
+  if (!token) return;
+  try { user = await api("GET", "/eu"); } catch (e) { user = null; }
+  mostrarUsuario();
+}
+
+/* ---------- vagas ---------- */
+async function carregarFiltros() {
+  const f = await api("GET", "/filtros"), uf = $("#uf").value;
+  $("#filtros").innerHTML = ["Todas", ...f.areas].map(a => `<button class="chip" type="button" aria-pressed="${a === area}" data-a="${esc(a)}">${esc(a)}</button>`).join("");
+  $("#uf").innerHTML = '<option value="">Todos</option>' + f.ufs.map(u => `<option>${esc(u)}</option>`).join("");
+  $("#uf").value = uf;
+  const opts = f.areas.map(a => `<option>${esc(a)}</option>`).join("");
+  $("#fArea").innerHTML = opts;
+  document.querySelector("#lCurso select").innerHTML = opts;
+  $("#empresasLista").innerHTML = f.empresas.map(e => `<li><b>${esc(e.nome)}</b><small>${e.vagas} ${e.vagas === 1 ? "vaga aberta" : "vagas abertas"}</small></li>`).join("") || "<li>Nenhuma vaga aberta.</li>";
+}
+async function carregar() {
+  const p = new URLSearchParams(), q = $("#busca").value.trim();
+  if (q) p.set("q", q);
+  if (area !== "Todas") p.set("area", area);
+  for (const [id, k] of [["modal", "modalidade"], ["uf", "uf"], ["bolsa", "bolsa_min"], ["carga", "carga_max"], ["ordem", "ordem"]]) {
+    const v = $("#" + id).value; if (v && v !== "0") p.set(k, v);
+  }
+  if (soSalvas) p.set("salvas", "1");
+  try { vagas = await api("GET", "/vagas?" + p); } catch (e) { vagas = []; toast(e.message); }
+  render();
+}
+function render() {
+  $("#contagem").textContent = vagas.length + (vagas.length === 1 ? " vaga encontrada" : " vagas encontradas");
+  $("#lista").innerHTML = vagas.length ? vagas.map(v => `
+    <article class="card job">
+      <div class="logo" aria-hidden="true">${esc(sigla(v.empresa))}</div>
+      <div>
+        <h3><button class="linkt" type="button" data-d="${v.id}">${esc(v.titulo)}</button></h3>
+        <div class="org">${esc(v.empresa)}</div>
+        <div class="meta">${esc(v.cidade)}, ${esc(v.uf)} · ${esc(v.modalidade)}</div>
+        <p>${esc(v.descricao)}</p>
+        <div class="tags"><span class="tag">${esc(v.area)}</span><span class="tag">Bolsa ${reais(v.bolsa)}</span><span class="tag">${horas(v.carga_horaria)}</span></div>
+        <div class="actions">
+          <button class="btn primary" type="button" data-c="${v.id}" ${v.candidatou ? "disabled" : ""}>${v.candidatou ? "Candidatura enviada" : "Candidatar-se"}</button>
+          <button class="btn ghost" type="button" data-s="${v.id}" aria-pressed="${v.salva}">${v.salva ? "Salva" : "Salvar"}</button>
+          <span class="when">${quando(v.dias)}</span>
+        </div>
+      </div>
+    </article>`).join("") : '<div class="card empty">Nenhuma vaga com esses filtros. Remova um filtro ou busque por outra cidade.</div>';
+}
+async function candidatar(id) {
+  if (!user) { abrirLogin("Entre como estudante para se candidatar", "estudante"); return false; }
+  if (user.tipo !== "estudante") { toast("Contas de empresa não podem se candidatar"); return false; }
+  await api("POST", `/vagas/${id}/candidatar`); toast("Candidatura enviada"); return true;
+}
+async function alternar(id, salva) {
+  if (!user) { abrirLogin("Entre para salvar vagas"); return false; }
+  await api(salva ? "DELETE" : "POST", `/vagas/${id}/salvar`); toast(salva ? "Vaga removida das salvas" : "Vaga salva"); return true;
+}
+$("#filtros").addEventListener("click", e => {
+  const b = e.target.closest("[data-a]"); if (!b) return;
+  area = b.dataset.a; soSalvas = false;
+  document.querySelectorAll("#filtros .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.a === area));
+  carregar();
+});
+$("#lista").addEventListener("click", e => acao(async () => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.d) return abrirDetalhe(+b.dataset.d);
+  if (b.dataset.c) { if (!await candidatar(+b.dataset.c)) return; }
+  else if (b.dataset.s) { const v = vagas.find(x => x.id === +b.dataset.s); if (!await alternar(v.id, v.salva)) return; }
+  else return;
+  await Promise.all([carregar(), atualizarEu()]);
+}));
+["#modal", "#uf", "#bolsa", "#carga", "#ordem"].forEach(s => $(s).addEventListener("input", carregar));
+let tb; $("#busca").addEventListener("input", () => { clearTimeout(tb); tb = setTimeout(carregar, 250); });
+$("#navSalvas").addEventListener("click", e => {
+  e.preventDefault();
+  if (!user) { abrirLogin("Entre para ver suas vagas salvas"); return; }
+  soSalvas = !soSalvas; carregar(); toast(soSalvas ? "Mostrando vagas salvas" : "Mostrando todas as vagas");
+});
+
+/* ---------- detalhe ---------- */
+const det = $("#det");
+async function abrirDetalhe(id) {
+  const v = detAtual = await api("GET", "/vagas/" + id);
+  $("#detBody").innerHTML = `
+    <div class="dhead"><div class="logo" aria-hidden="true">${esc(sigla(v.empresa))}</div>
+      <div><h3>${esc(v.titulo)}</h3><div class="org">${esc(v.empresa)}</div><div class="meta" style="margin:0">${esc(v.cidade)}, ${esc(v.uf)} · ${esc(v.modalidade)} · ${quando(v.dias)}</div></div></div>
+    <div class="tags" style="margin:0"><span class="tag">${esc(v.area)}</span><span class="tag">Bolsa ${reais(v.bolsa)}</span><span class="tag">${horas(v.carga_horaria)}</span></div>
+    <div><h4>Atividades</h4><p style="margin:0">${esc(v.descricao)}</p></div>
+    <div><h4>Requisitos</h4>${lista(v.requisitos)}</div>
+    <div><h4>Benefícios</h4>${lista(v.beneficios)}</div>
+    <div class="actions">
+      <button class="btn primary" type="button" data-c="1" ${v.candidatou || !v.ativa ? "disabled" : ""}>${v.candidatou ? "Candidatura enviada" : v.ativa ? "Candidatar-se" : "Vaga encerrada"}</button>
+      <button class="btn ghost" type="button" data-s="1" aria-pressed="${v.salva}">${v.salva ? "Salva" : "Salvar"}</button>
+      <button class="btn ghost" type="button" data-x="1" style="margin-left:auto">Fechar</button>
+    </div>`;
+  if (!det.open) det.showModal();
+}
+det.addEventListener("click", e => acao(async () => {
+  const b = e.target.closest("button"), v = detAtual; if (!b) return;
+  if (b.dataset.x) { det.close(); return; }
+  if (b.dataset.c) { if (!await candidatar(v.id)) return; }
+  else if (b.dataset.s) { if (!await alternar(v.id, v.salva)) return; }
+  else return;
+  await Promise.all([carregar(), atualizarEu()]);
+  await abrirDetalhe(v.id);
+}));
+
+/* ---------- login e cadastro ---------- */
+const ldlg = $("#ldlg"), lf = $("#lform");
+function setModo(m, t) {
+  modo = m; if (t) tipoConta = t;
+  const cad = m === "cadastro", emp = tipoConta === "empresa";
+  $("#lTitulo").textContent = cad ? "Criar conta" : "Entrar no Estagiagros";
+  $("#lOk").textContent = cad ? "Criar conta" : "Entrar";
+  $("#lAlt").textContent = cad ? "Já tenho conta" : "Criar conta";
+  $("#lTabs").hidden = $("#lNomeW").hidden = !cad;
+  $("#lCurso").hidden = $("#lInst").hidden = !cad || emp;
+  $("#lCnpj").hidden = !cad || !emp;
+  $("#lNome").textContent = emp ? "Nome da empresa" : "Nome completo";
+  document.querySelectorAll("[data-t]").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === tipoConta));
+  lf.elements.nome.required = cad;
+  lf.elements.senha.autocomplete = cad ? "new-password" : "current-password";
+  $("#lErr").textContent = "";
+}
+function abrirLogin(msg, tipo, m) {
+  if (det.open) det.close();
+  setModo(m || "entrar", tipo); $("#lMsg").textContent = msg || ""; ldlg.showModal();
+}
+document.querySelectorAll("[data-t]").forEach(b => b.onclick = () => setModo("cadastro", b.dataset.t));
+$("#lAlt").onclick = () => setModo(modo === "cadastro" ? "entrar" : "cadastro");
+$("#lCancel").onclick = () => ldlg.close();
+lf.addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = lf.elements, cad = modo === "cadastro";
+  try {
+    const corpo = cad ? {tipo: tipoConta, nome: f.nome.value, email: f.email.value, senha: f.senha.value, curso: f.curso.value, instituicao: f.instituicao.value, cnpj: f.cnpj.value}
+                      : {email: f.email.value, senha: f.senha.value};
+    const r = await api("POST", cad ? "/registrar" : "/login", corpo);
+    guardar(r.token); ldlg.close(); lf.reset();
+    await atualizarEu(); await carregar();
+    toast("Bem-vindo(a), " + user.nome.split(" ")[0]);
+  } catch (err) { $("#lErr").textContent = err.message; }
+});
+$("#btnLogin").onclick = () => user ? acao(async () => {
+  await api("POST", "/logout").catch(() => {});
+  guardar(null); user = null; soSalvas = false; mostrarUsuario(); await carregar(); toast("Você saiu da conta");
+}) : abrirLogin();
+
+/* ---------- publicar vaga (empresa) ---------- */
+const dlg = $("#dlg");
+$("#abrirForm").onclick = () => {
+  if (!user) { abrirLogin("Entre como empresa para divulgar vagas", "empresa"); return; }
+  if (user.tipo !== "empresa") { toast("Apenas contas de empresa podem divulgar vagas"); return; }
+  $("#fErr").textContent = ""; dlg.showModal();
+};
+$("#cancelar").onclick = () => dlg.close();
+$("#form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(e.target)); f.bolsa = +f.bolsa; f.carga_horaria = +f.carga_horaria;
+  try {
+    await api("POST", "/vagas", f); dlg.close(); e.target.reset();
+    await Promise.all([carregarFiltros(), carregar()]); toast("Vaga publicada");
+  } catch (err) { $("#fErr").textContent = err.message; }
+});
+
+/* ---------- painel: candidaturas (estudante) / minhas vagas (empresa) ---------- */
+const pdlg = $("#pdlg");
+async function abrirPainel() {
+  if (!user) return;
+  if (user.tipo === "estudante") {
+    const l = await api("GET", "/minhas/candidaturas");
+    $("#pTitulo").textContent = "Minhas candidaturas";
+    $("#pCorpo").innerHTML = l.length ? l.map(k => `<div class="item"><b>${esc(k.titulo)}</b>
+      <div class="meta" style="margin:0 0 6px">${esc(k.empresa)} · ${esc(k.status)} · ${quando(k.dias)}${k.ativa ? "" : " · vaga encerrada"}</div>
+      <button class="btn ghost" type="button" data-r="${k.vaga_id}">Retirar candidatura</button></div>`).join("")
+      : '<p class="hint">Você ainda não se candidatou a nenhuma vaga.</p>';
+  } else {
+    const l = await api("GET", "/empresa/vagas");
+    $("#pTitulo").textContent = "Minhas vagas";
+    $("#pCorpo").innerHTML = l.length ? l.map(v => `<div class="item"><b>${esc(v.titulo)}</b>
+      <div class="meta" style="margin:0 0 6px">${esc(v.cidade)}, ${esc(v.uf)} · ${v.ativa ? "aberta" : "encerrada"} · ${v.candidatos} ${v.candidatos === 1 ? "candidato" : "candidatos"}</div>
+      <div class="actions"><button class="btn ghost" type="button" data-v="${v.id}">Ver candidatos</button>
+      ${v.ativa ? `<button class="btn ghost" type="button" data-e="${v.id}">Encerrar vaga</button>` : ""}</div>
+      <div id="cand-${v.id}"></div></div>`).join("")
+      : '<p class="hint">Você ainda não publicou vagas.</p>';
+  }
+  if (!pdlg.open) pdlg.showModal();
+}
+$("#navPainel").addEventListener("click", e => { e.preventDefault(); acao(abrirPainel); });
+$("#pFechar").onclick = () => pdlg.close();
+$("#pCorpo").addEventListener("click", e => acao(async () => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.r) {
+    await api("DELETE", `/vagas/${b.dataset.r}/candidatar`); toast("Candidatura retirada");
+    await Promise.all([abrirPainel(), carregar(), atualizarEu()]);
+  } else if (b.dataset.v) {
+    const c = await api("GET", `/empresa/vagas/${b.dataset.v}/candidatos`);
+    $("#cand-" + b.dataset.v).innerHTML = c.length ? c.map(x => `<div class="item"><b>${esc(x.nome)}</b> · ${esc(x.email)}
+      <div class="meta" style="margin:0">${esc(x.curso || "")}${x.instituicao ? " · " + esc(x.instituicao) : ""}</div>
+      ${x.resumo ? `<p class="hint">${esc(x.resumo)}</p>` : ""}
+      <select data-k="${x.id}" aria-label="Status de ${esc(x.nome)}">${["enviada", "em análise", "aprovada", "recusada"].map(s => `<option${s === x.status ? " selected" : ""}>${s}</option>`).join("")}</select></div>`).join("")
+      : '<p class="hint">Nenhuma candidatura ainda.</p>';
+  } else if (b.dataset.e) {
+    if (!b.dataset.sure) { b.dataset.sure = 1; b.textContent = "Confirmar encerramento"; return; }
+    await api("DELETE", "/vagas/" + b.dataset.e); toast("Vaga encerrada");
+    await Promise.all([abrirPainel(), carregar(), carregarFiltros()]);
+  }
+}));
+$("#pCorpo").addEventListener("change", e => acao(async () => {
+  const s = e.target.closest("[data-k]"); if (!s) return;
+  await api("PATCH", "/candidaturas/" + s.dataset.k, {status: s.value}); toast("Status atualizado");
+}));
+
+/* ---------- início ---------- */
+(async () => {
+  await atualizarEu(); mostrarUsuario();
+  await carregarFiltros().catch(e => toast(e.message));
+  carregar();
+})();
+</script>
+</body>
+</html>
